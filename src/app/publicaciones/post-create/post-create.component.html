@@ -1,16 +1,35 @@
 
  <mat-card>
+  <form (submit)="onAddPost(postForm)" #postForm="ngForm">
 
-  <mat-form-field>
-    <textarea matInput [(ngModel)]="enteredValue" rows="6">
-    </textarea>
-   </mat-form-field>
+    <mat-form-field>
+      <input matInput type="text"
+      name="title"
+      ngModel
+      required
+      #title="ngModel">
+      <mat-error *ngIf="title.invalid">El campo es obligatorio</mat-error>
+     </mat-form-field>
 
-   <button
-   mat-raised-button
-   color="primary"
-   (click)="onAddPost()">
-    Guardar Post
-   </button>
+
+     <mat-form-field>
+      <textarea matInput rows="6"
+      name="content"
+      ngModel
+      required
+      #content="ngModel">
+      </textarea>
+      <mat-error *ngIf="content.invalid">El campo es obligatorio</mat-error>
+     </mat-form-field>
+
+     <button
+     mat-raised-button
+     color="warn"
+     type="submit">
+      Guardar Post
+     </button>
+
+  </form>
+
  </mat-card>
 
