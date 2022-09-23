@@ -14,6 +14,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PostCreateComponent } from './publicaciones/post-create/post-create.component';
 import { PostListComponent } from './publicaciones/post-list/post-list.component';
+import { PostService } from './publicaciones/post.service';
 
 
 @NgModule({
@@ -35,7 +36,9 @@ import { PostListComponent } from './publicaciones/post-list/post-list.component
     MatIconModule,
     MatExpansionModule
   ],
-  providers: [],
+  providers: [
+    PostService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
