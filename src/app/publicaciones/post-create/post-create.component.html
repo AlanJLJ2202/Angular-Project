@@ -7,6 +7,7 @@
       name="title"
       ngModel
       required
+      placeholder="Titulo"
       #title="ngModel">
       <mat-error *ngIf="title.invalid">El campo es obligatorio</mat-error>
      </mat-form-field>
@@ -17,6 +18,7 @@
       name="content"
       ngModel
       required
+      placeholder="Contenido"
       #content="ngModel">
       </textarea>
       <mat-error *ngIf="content.invalid">El campo es obligatorio</mat-error>

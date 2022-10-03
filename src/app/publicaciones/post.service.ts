@@ -9,11 +9,6 @@ export class PostService {
   private posts : Post[] = []; //Primera matriz
   private postsUpdated = new Subject<Post[]>();
 
-  /*getPosts(){
-    return this.posts //Devuelve una copia de la matriz
-  }*/
-
-
   getPosts(){
     return [...this.posts] //Devuelve una copia de la matriz
   }
@@ -28,6 +23,4 @@ export class PostService {
     this.posts.push(post);
     this.postsUpdated.next([...this.posts]);
   }
-
-
 }
