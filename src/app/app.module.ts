@@ -18,6 +18,11 @@ import { PostListComponent } from './publicaciones/post-list/post-list.component
 import { PostService } from './publicaciones/post.service';
 
 
+//Credenciales MongoDB
+
+//user: alanjlj2202
+//password: tm9PSFicMndbFBJs
+
 @NgModule({
   declarations: [
     AppComponent,
