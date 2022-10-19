@@ -32,6 +32,22 @@ constructor(private http: HttpClient) {
     });
   }
 
+  getPost(id: string){
+    return {...this.posts.find(post => post.id === id)};
+  }
+
+  updatePost(id: string, title: string, content: string){
+    const post: Post = {id: id, title: title, content: content};
+    this.http.put('http://localhost:3000/api.posts.update/' + id, post)
+    .subscribe(response => {
+      const updatedPosts = [...this.posts];
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      updatedPosts[oldPostIndex] = post;
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
+    });
+  }
+
   getPostUpdateListener(){
     return this.postsUpdated.asObservable();
   }
@@ -39,9 +55,10 @@ constructor(private http: HttpClient) {
 
   addPost(title: string, content: string){
     const post: Post = {id: null, title: title, content: content};
-    this.http.post<{message: string}>('http://localhost:3000/api.posts', post)
+    this.http.post<{message: string, _id: string}>('http://localhost:3000/api.posts', post)
     .subscribe((responseData) => {
-      console.log(responseData.message);
+      const id = responseData._id;
+      post.id = id;
       this.posts.push(post);
       this.postsUpdated.next([...this.posts]);
     });
@@ -50,7 +67,9 @@ constructor(private http: HttpClient) {
   deletePost(id: string){
     this.http.delete('http://localhost:3000/api.posts.delete/' + id)
     .subscribe(() => {
-      console.log('Eliminado!');
+      const updatedPosts = this.posts.filter(post => post.id !== id);
+      this.posts = updatedPosts;
+      this.postsUpdated.next([...this.posts]);
     });
 
     window.location.reload();

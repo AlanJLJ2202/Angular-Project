@@ -31,8 +31,6 @@ export class PostListComponent implements OnInit, OnDestroy {
 
  onDelete(_id: string){
    this.postService.deletePost(_id);
-
-   //this.posts.splice(this.posts.findIndex(post => post.id === _id), 1);
  }
 
 }

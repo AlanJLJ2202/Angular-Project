@@ -32,12 +32,15 @@ app.post('/api.posts', (req, res, next) => {
     content: req.body.content
   });
 
-  post.save();
+  post.save().then(result => {
+    res.status(201).json({
+      message: 'Post added successfully',
+      id: result._id
+    });
+  });
 
   console.log(post);
-  res.status(201).json({
-    message: 'Post added successfully'
-  });
+
 });
 
 app.use('/api.posts', (req, res, next) => {
@@ -59,7 +62,21 @@ app.delete('/api.posts.delete/:id', (req, res) => {
     res.send(resultado);
   }).catch((error) => {
     res.status(500).send(error);
-  })
+  });
+
+});
+
+app.put('/api.posts.update/:id', (req, res) => {
+
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content
+    });
+
+    Post.updateOne({id: req.params.id}, post).then(resultado => {
+      console.log(resultado);
+      res.status(200).json({message: 'Updated successfully!'});
+    });
 
 });
 
