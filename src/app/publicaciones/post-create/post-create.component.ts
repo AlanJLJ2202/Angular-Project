@@ -25,7 +25,9 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('id')){
         this.mode = 'edit';
         this.id = paramMap.get('id');
-        this.postService.getPost(this.id);
+        this.postService.getPost(this.id).subscribe(postData => {
+          this.post = {id: postData._id, title: postData.title, content: postData.content}
+        });
 
       }else{
         this.mode = 'create';
@@ -45,6 +47,7 @@ export class PostCreateComponent implements OnInit {
   if (this.mode === 'create'){
     this.postService.addPost(form.value.title, form.value.content);
   }else{
+    console.log('Entra en editar');
     this.postService.updatePost(this.id, form.value.title, form.value.content);
   }
 
