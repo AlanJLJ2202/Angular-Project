@@ -1,25 +1,25 @@
 
  <mat-card>
-  <form (submit)="onSavePost(postForm)" #postForm="ngForm">
+
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+
+  <form (submit)="onSavePost(postForm)" *ngIf="!isLoading">
 
     <mat-form-field>
       <input matInput type="text"
       name="title"
-      [ngModel] = "post?.title"
-      required
-      placeholder="Titulo"
-      #title="ngModel">
+      placeholder="Titulo">
       <mat-error *ngIf="title.invalid">El campo es obligatorio</mat-error>
      </mat-form-field>
-
-
+     <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona Imagen</button>
+      <input type="file" #filePicker accept="image/*">
+     </div>
      <mat-form-field>
-      <textarea matInput rows="6"
+      <textarea matInput
+      rows="6"
       name="content"
-      [ngModel] = "post?.content"
-      required
-      placeholder="Contenido"
-      #content="ngModel">
+      placeholder="Contenido">
       </textarea>
       <mat-error *ngIf="content.invalid">El campo es obligatorio</mat-error>
      </mat-form-field>

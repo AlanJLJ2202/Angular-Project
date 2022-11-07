@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
 @Injectable({providedIn: 'root'})
@@ -11,7 +12,7 @@ export class PostService {
   private posts : Post[] = []; //Primera matriz
   private postUpdate = new Subject<Post[]>();
 
-constructor(private http: HttpClient) {
+constructor(private http: HttpClient, private router: Router) {
 
 }
 
@@ -47,6 +48,7 @@ constructor(private http: HttpClient) {
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postUpdate.next([...this.posts]);
+      this.router.navigate(['/']);
     });
   }
 
@@ -63,6 +65,7 @@ constructor(private http: HttpClient) {
       post.id = id;
       this.posts.push(post);
       this.postUpdate.next([...this.posts]);
+      this.router.navigate(['/']);
     });
   }
 

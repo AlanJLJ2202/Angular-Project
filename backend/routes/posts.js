@@ -55,7 +55,7 @@ router.delete('/:id', (req, res) => {
 
 });
 
-router.put('', (req, res, next) => {
+router.put('/:id', (req, res, next) => {
 
     console.log('Se ejecuta en posts.js');
 
