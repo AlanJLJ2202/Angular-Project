@@ -48,18 +48,14 @@ router.post('', multer({storage: storage}).single("image"), (req, res, next) => 
   console.log(post);
 });
 
-router.use('', (req, res, next) => {
-  Post.find().then(documents => {
-    res.status(200).json({
-      message: 'Posts fetched successfully',
-      posts: documents
-    });
-  });
-});
+
+
 
 router.get("/:id", (req, res) => {
+  console.log('SE EJECUTA EL GET EN SERVIDOR');
   Post.findById(req.params.id).then(post => {
     if(post){
+      console.log('post === ', post);
       res.status(200).json(post);
     }else{
       res.status(404).json({message: 'Post no encontrado'});
@@ -68,8 +64,9 @@ router.get("/:id", (req, res) => {
 });
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
 
+  console.log('entra a la funcion');
   Post.findByIdAndDelete(req.params.id).then((resultado) => {
     if (!resultado) {
         return res.status(404).send();
@@ -97,6 +94,19 @@ router.put('/:id', (req, res, next) => {
     });
 
 });
+
+router.use('', (req, res) => {
+  Post.find().then(documents => {
+    console.log('SE EJECUTA EL MIDDLEWARE');
+    res.status(200).json({
+      message: 'Posts fetched successfully',
+      posts: documents
+    });
+  });
+});
+
+
+
 
 
 module.exports = router;

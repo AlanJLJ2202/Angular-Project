@@ -13,10 +13,13 @@ mat-spinner{
 }
 
 .image-preview{
-  height: 5rem;
+  height: 20rem;
   margin: 1rem 0;
 }
 
 .image-preview img{
+  width: 50%;
   height: 100%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  margin: auto;
 }

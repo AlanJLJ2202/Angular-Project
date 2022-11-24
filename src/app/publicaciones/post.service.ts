@@ -35,7 +35,8 @@ constructor(private http: HttpClient, private router: Router) {
   }
 
   getPost(id: string){
-    return this.http.get<{_id: string, title: string, content: string}>("http://localhost:3000/api.posts/"+ id);
+    console.log('ENTRA EN GETPOST');
+    return this.http.get<{_id: string, title: string, content: string, imagePath: string}>("http://localhost:3000/api.posts/" + id);
   }
 
   updatePost(id: string, title: string, content: string){
@@ -80,6 +81,7 @@ constructor(private http: HttpClient, private router: Router) {
   }
 
   deletePost(id: string){
+    console.log('ENTRA');
     this.http.delete('http://localhost:3000/api.posts/' + id)
     .subscribe(() => {
       const updatedPosts = this.posts.filter(post => post.id !== id);

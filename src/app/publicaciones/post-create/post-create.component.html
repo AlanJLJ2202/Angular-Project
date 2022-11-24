@@ -8,14 +8,18 @@
     <mat-form-field>
       <input matInput type="text"
       formControlName="title"
+      value="{{post.title}}"
       placeholder="Titulo">
       <mat-error *ngIf="form.get('title').invalid">El campo es obligatorio</mat-error>
      </mat-form-field>
      <div>
-      <button mat-stroked-button type="button" (click)="filePicker.click()">Selecciona Imagen</button>
-      <input type="file" #filePicker accept="image/*" (change)="onImagePicked($event)">
+      <button mat-stroked-button type="button"
+      (click)="filePicker.click()">Selecciona Imagen</button>
+      <input type="file" #filePicker accept="image/*"
+      (change)="onImagePicked($event)">
      </div>
-     <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+     <div class="image-preview"
+     *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
         <img [src]="imagePreview" [alt]="form.value.title">
      </div>
      <mat-form-field>

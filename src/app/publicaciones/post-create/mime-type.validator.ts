@@ -18,11 +18,11 @@ Promise<{[key: string]: any}> | Observable <{[key: string]: any}>=> {
         case "89504e47":
           isValid = true;
           break;
-        case "ffd8dde0":
-        case "ffd8dde1":
-        case "ffd8dde2":
-        case "ffd8dde3":
-        case "ffd8dde8":
+        case "ffd8ffe0":
+        case "ffd8ffe1":
+        case "ffd8ffe2":
+        case "ffd8ffe3":
+        case "ffd8ffe8":
           isValid = true;
           break;
         default:

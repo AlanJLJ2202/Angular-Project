@@ -39,15 +39,26 @@ export class PostCreateComponent implements OnInit {
 
     this.router.paramMap.subscribe((paramMap) => {
       if (paramMap.has('id')){
+
+        console.log('ENTRA EN EDITAR');
+
         this.isLoading = true;
         this.mode = 'edit';
         this.id = paramMap.get('id');
+
+        console.log('id = ' + this.id);
+
         this.postService.getPost(this.id).subscribe(postData => {
           this.isLoading = false;
-          this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: null};
+
+          console.log('postData = ' + postData._id);
+
+          this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath};
+          console.log('POSSSST, ', this.post);
           this.form.setValue({
             'title': this.post.title,
-            'content': this.post.content
+            'content': this.post.content,
+            'image': this.post.imagePath
           });
         });
 
@@ -74,10 +85,7 @@ export class PostCreateComponent implements OnInit {
 
 
  onSavePost(){
-
   console.log('se ejecuta onSavePost');
-
-
   this.isLoading = true;
 
   if (this.mode === 'create'){
