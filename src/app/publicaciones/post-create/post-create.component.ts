@@ -53,7 +53,14 @@ export class PostCreateComponent implements OnInit {
 
           console.log('postData = ' + postData._id);
 
-          this.post = {id: postData._id, title: postData.title, content: postData.content, imagePath: postData.imagePath};
+          this.post = {
+            id: postData._id,
+            title: postData.title,
+            content: postData.content,
+            imagePath: postData.imagePath};
+
+          this.imagePreview = this.post.imagePath;
+
           console.log('POSSSST, ', this.post);
           this.form.setValue({
             'title': this.post.title,
@@ -75,7 +82,7 @@ export class PostCreateComponent implements OnInit {
     const file = (event.target as HTMLInputElement).files[0];
     this.form.patchValue({image: file});
     this.form.get('image').updateValueAndValidity();
-    console.log(file);
+    console.log('WOW =', file);
     console.log(this.form);
     reader.onload = () => {
       this.imagePreview = reader.result as string;
@@ -96,7 +103,18 @@ export class PostCreateComponent implements OnInit {
       );
   }else{
     console.log('Entra en editar');
-    this.postService.updatePost(this.id, this.form.value.title, this.form.value.content);
+
+    console.log('this.form.value.image = ' + this.form.value.image);
+    if (this.form.value.image == this.imagePreview){
+      this.form.value.image = this.imagePreview;
+    }
+
+    this.postService.updatePost(
+      this.id,
+      this.form.value.title,
+      this.form.value.content,
+      this.form.value.image
+      );
   }
 
   //this.postService.addPost(form.value.title, form.value.content);

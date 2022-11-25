@@ -39,14 +39,42 @@ constructor(private http: HttpClient, private router: Router) {
     return this.http.get<{_id: string, title: string, content: string, imagePath: string}>("http://localhost:3000/api.posts/" + id);
   }
 
-  updatePost(id: string, title: string, content: string){
-    const post: Post = {id: id, title: title, content: content, imagePath: null};
-    console.log('post = ' + post.title);
+  updatePost(id: string, title: string, content: string, image: File | string){
 
-    this.http.put('http://localhost:3000/api.posts/' + id, post)
+    let postData: Post | FormData;
+    postData = new FormData();
+
+    if (typeof(image) === 'object'){
+
+      console.log('ENTRA AL IF')
+
+      postData.append('id', id);
+      postData.append('title', title);
+      postData.append('content', content);
+      postData.append('image', image, title);
+
+    }else{
+
+      console.log('ENTRA AL ELSE');
+
+      postData.append('id', id);
+      postData.append('title', title);
+      postData.append('content', content);
+      postData.append('imagePath', image);
+
+    }
+
+
+    this.http.put('http://localhost:3000/api.posts/' + id, postData)
     .subscribe(response => {
       const updatedPosts = [...this.posts];
-      const oldPostIndex = updatedPosts.findIndex(p => p.id === post.id);
+      const oldPostIndex = updatedPosts.findIndex(p => p.id === id);
+      const post: Post = {
+        id: id,
+        title: title,
+        content: content,
+        imagePath: ''
+      };
       updatedPosts[oldPostIndex] = post;
       this.posts = updatedPosts;
       this.postUpdate.next([...this.posts]);
@@ -81,7 +109,7 @@ constructor(private http: HttpClient, private router: Router) {
   }
 
   deletePost(id: string){
-    console.log('ENTRA');
+    console.log('ENTRA A DELETE');
     this.http.delete('http://localhost:3000/api.posts/' + id)
     .subscribe(() => {
       const updatedPosts = this.posts.filter(post => post.id !== id);

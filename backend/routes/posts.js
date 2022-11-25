@@ -64,9 +64,9 @@ router.get("/:id", (req, res) => {
 });
 
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
 
-  console.log('entra a la funcion');
+  console.log('entra a la funcion delete');
   Post.findByIdAndDelete(req.params.id).then((resultado) => {
     if (!resultado) {
         return res.status(404).send();
@@ -78,14 +78,24 @@ router.delete('/delete/:id', (req, res) => {
 
 });
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', multer({storage: storage}).single("image"), (req, res, next) => {
 
-    console.log('Se ejecuta en posts.js');
+    console.log('ENTRA A LA FUNCION PUT');
+
+
+    let imagePath = req.body.imagePath;
+    if(req.file){
+      const url = req.protocol + '://' + req.get("host");
+      imagePath = url + "/images/" + req.file.filename;
+    }
+
+    console.log('req.body.imagePath === ', imagePath);
 
     const post = new Post({
       _id: req.body.id,
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
+      imagePath: imagePath
     });
 
     Post.updateOne({_id: req.params.id}, post).then(resultado => {
